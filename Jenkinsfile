@@ -81,11 +81,14 @@ pipeline {
                }
           }
 */         
-          stage("Smoke test") {
+/* 
+stage("Smoke test") {
               steps {
                   sleep 60
                   sh "chmod +x smoke-test.sh && ./smoke-test.sh"
               }
           }
+ */
      }
 }
+
