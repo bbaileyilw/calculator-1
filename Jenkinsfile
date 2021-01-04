@@ -33,7 +33,7 @@ pipeline {
 
           stage("Docker build") {
                steps {
-                    sh "docker build -t leszko/calculator:${BUILD_NUMBER} ."
+                    sh "docker build -t wbbdockerid/calculator:${BUILD_NUMBER} ."
                }
           }
 
@@ -48,7 +48,7 @@ pipeline {
 
           stage("Docker push") {
                steps {
-                    sh "docker push leszko/calculator:${BUILD_NUMBER}"
+                    sh "docker push wbbdockerid/calculator:${BUILD_NUMBER}"
                }
           }
 
