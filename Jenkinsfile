@@ -65,7 +65,7 @@ pipeline {
                     sh "kubectl apply -f calculator.yaml"
                }
           }
-/*
+*/
           stage("Acceptance test") {
                steps {
                     sleep 60
@@ -80,7 +80,7 @@ pipeline {
                     sh "kubectl apply -f calculator.yaml"
                }
           }
-/*          
+*/         
           stage("Smoke test") {
               steps {
                   sleep 60
