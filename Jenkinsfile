@@ -54,20 +54,20 @@ pipeline {
           
           stage("Deploy to staging") {
                steps {
-                    sh "docker run -H 172.31.9.91:2375 -d --rm -p 8765:8080 --name calculator wbbdocker1/calculator"
+                    sh "DOCKER_HOST=172.31.13.140:2375 docker run -d --rm -p 8765:8080 --name calculator wbbdocker1/calculator"
                }
           }
 
           stage("Acceptance test") {
                steps {
                     sleep 60
-                    sh "./gradlew acceptanceTest -Dcalculator.url=http://172.31.9.91:8765"
+                    sh "./gradlew acceptanceTest -Dcalculator.url=http://172.31.13.140:8765"
                }
           }
      }
      post {
           always {
-               sh "docker stop calculator"
+               sh "DOCKER_HOST=172.31.13.140:2375 docker stop calculator"
           }
      }
 }
