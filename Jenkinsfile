@@ -54,14 +54,14 @@ pipeline {
           
           stage("Deploy to staging") {
                steps {
-                    sh "docker run -d --rm -p 8765:8080 --name calculator wbbdocker1/calculator"
+                    sh "docker run -H 172.31.9.91:2375 -d --rm -p 8765:8080 --name calculator wbbdocker1/calculator"
                }
           }
 
           stage("Acceptance test") {
                steps {
                     sleep 60
-                    sh "./gradlew acceptanceTest -Dcalculator.url=http://localhost:8765"
+                    sh "./gradlew acceptanceTest -Dcalculator.url=http://172.31.9.91:8765"
                }
           }
      }
