@@ -33,7 +33,7 @@ pipeline {
 
           stage("Docker build") {
                steps {
-                    sh "docker build -t leszko/calculator ."
+                    sh "docker build -t wbbdocker1/calculator ."
                }
           }
 
@@ -48,13 +48,13 @@ pipeline {
 
           stage("Docker push") {
                steps {
-                    sh "docker push leszko/calculator"
+                    sh "docker push wbbdocker1/calculator"
                }
           }
           
           stage("Deploy to staging") {
                steps {
-                    sh "docker run -d --rm -p 8765:8080 --name calculator leszko/calculator"
+                    sh "docker run -d --rm -p 8765:8080 --name calculator wbbdocker1/calculator"
                }
           }
 
