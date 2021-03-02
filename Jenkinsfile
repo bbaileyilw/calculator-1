@@ -66,6 +66,7 @@ pipeline {
           }
           stage("Release") {
                steps {
+                    sh "DOCKER_HOST=172.31.8.67:2375 docker stop calculator || truer"
                     sh "DOCKER_HOST=172.31.8.67:2375 docker run -d --rm -p 8765:8080 --name calculator wbbdocker1/calculator"
                }
           }
