@@ -64,6 +64,11 @@ pipeline {
                     sh "./gradlew acceptanceTest -Dcalculator.url=http://172.31.13.140:8765"
                }
           }
+          stage("Release") {
+               steps {
+                    sh "DOCKER_HOST=172.31.8.67:2375 docker run -d --rm -p 8765:8080 --name calculator wbbdocker1/calculator"
+               }
+          }
      }
      post {
           always {
