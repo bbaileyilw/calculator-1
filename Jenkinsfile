@@ -58,22 +58,24 @@ pipeline {
                }
           }
           
- /*         stage("Deploy to staging") {
+          stage("Deploy to staging") {
                steps {
-                    sh "kubectl config use-context staging"
-                    sh "kubectl apply -f hazelcast.yaml"
-                    sh "kubectl apply -f calculator.yaml"
+                   withKubeConfig([credentialsId: 'kubernetes-token',
+                        serverUrl: 'https://712AB9B49CF089974C0EACC423442F4B.gr7.us-east-2.eks.amazonaws.com'
+                        ]) {
+                            sh "kubectl apply -f calculator.yaml"
+                    }
                }
           }
-*/
-/*
+
+
           stage("Acceptance test") {
                steps {
                     sleep 60
                     sh "chmod +x acceptance-test.sh && ./acceptance-test.sh"
                }
           }
-*/
+
 /*
           stage("Release") {
                steps {
