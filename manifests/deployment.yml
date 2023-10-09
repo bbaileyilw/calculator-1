@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: bbaileyilwcalculator 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bbaileyilwcalculator
+  template:
+    metadata:
+      labels:
+        app: bbaileyilwcalculator 
+    spec:
+      containers:
+        - name: bbaileyilwcalculator 
+          image: wbbregistry.azurecr.io/bbaileyilwcalculator
+          ports:
+          - containerPort: 80
