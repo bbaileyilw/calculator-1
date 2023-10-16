@@ -53,7 +53,7 @@ stages:
     displayName: Deploy
     pool:
       vmImage: $(vmImageName)
-    environment: 'bbaileyilwcalculator1.default'
+    environment: 'wbbkubernetes.default'
     strategy:
       runOnce:
         deploy:
