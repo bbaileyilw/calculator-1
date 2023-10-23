@@ -44,12 +44,12 @@ stages:
     - upload: manifests
       artifact: manifests
 
-- stage: Deploy to staging
+- stage: DeployStaging
   displayName: Deploy to staging stage
   dependsOn: Build
 
   jobs:
-  - deployment: Deploy to staging
+  - deployment: DeployStaging
     displayName: Deploy to staging
     pool:
       vmImage: $(vmImageName)
@@ -77,12 +77,12 @@ stages:
               containers: |
                 $(containerRegistry)/$(imageRepository):$(tag)
 
-- stage: Deploy to prod
+- stage: DeployProd
   displayName: Deploy to prod stage
-  dependsOn: Deploy to staging
+  dependsOn: DeployStaging
 
   jobs:
-  - deployment: Deploy to prod
+  - deployment: DeployProd
     displayName: Deploy to prod
     pool:
       vmImage: $(vmImageName)
