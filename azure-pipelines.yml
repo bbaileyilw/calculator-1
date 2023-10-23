@@ -44,44 +44,44 @@ stages:
     - upload: manifests
       artifact: manifests
 
-- stage: DeployStaging
-  displayName: Deploy to staging stage
-  dependsOn: Build
+# - stage: DeployStaging
+#   displayName: Deploy to staging stage
+#   dependsOn: Build
 
-  jobs:
-  - deployment: DeployStaging
-    displayName: Deploy to staging
-    pool:
-      vmImage: $(vmImageName)
-    environment: 'staging'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: KubernetesManifest@0
-            displayName: Create imagePullSecret
-            inputs:
-              action: createSecret
-              namespace: staging
-              secretName: $(imagePullSecret)
-              dockerRegistryEndpoint: $(dockerRegistryServiceConnection)
+#   jobs:
+#   - deployment: DeployStaging
+#     displayName: Deploy to staging
+#     pool:
+#       vmImage: $(vmImageName)
+#     environment: 'staging'
+#     strategy:
+#       runOnce:
+#         deploy:
+#           steps:
+#           - task: KubernetesManifest@0
+#             displayName: Create imagePullSecret
+#             inputs:
+#               action: createSecret
+#               namespace: staging
+#               secretName: $(imagePullSecret)
+#               dockerRegistryEndpoint: $(dockerRegistryServiceConnection)
 
-          - task: KubernetesManifest@0
-            displayName: Deploy to Kubernetes cluster
-            inputs:
-              action: deploy
-              namespace: staging
-              manifests: |
-                $(Pipeline.Workspace)/manifests/deployment.yml
-                $(Pipeline.Workspace)/manifests/service.yml
-              imagePullSecrets: |
-                $(imagePullSecret)
-              containers: |
-                $(containerRegistry)/$(imageRepository):$(tag)
+#           - task: KubernetesManifest@0
+#             displayName: Deploy to Kubernetes cluster
+#             inputs:
+#               action: deploy
+#               namespace: staging
+#               manifests: |
+#                 $(Pipeline.Workspace)/manifests/deployment.yml
+#                 $(Pipeline.Workspace)/manifests/service.yml
+#               imagePullSecrets: |
+#                 $(imagePullSecret)
+#               containers: |
+#                 $(containerRegistry)/$(imageRepository):$(tag)
 
 - stage: DeployProd
   displayName: Deploy to prod stage
-  dependsOn: DeployStaging
+  dependsOn: Build
 
   jobs:
   - deployment: DeployProd
