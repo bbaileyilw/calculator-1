@@ -25,11 +25,11 @@ pipeline {
                }
           }
 
-          stage("Docker build") {
-               steps {
-                    sh "docker build -t wbbdockerid/calculator:${BUILD_NUMBER} ."
-               }
-          }
+          // stage("Docker build") {
+          //      steps {
+          //           sh "docker build -t wbbdockerid/calculator:${BUILD_NUMBER} ."
+          //      }
+          // }
 
           // stage("Docker login") {
           //      steps {
