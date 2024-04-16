@@ -14,12 +14,6 @@ pipeline {
                     sh "./gradlew test"
                }
           }
-          stage("Code coverage") {
-               steps {
-                    sh "./gradlew jacocoTestReport"
-                  
-               }
-          }
           stage("Static code analysis") {
                steps {
                     sh "./gradlew checkstyleMain"
@@ -37,44 +31,44 @@ pipeline {
                }
           }
 
-          stage("Docker login") {
-               steps {
-                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'docker-hub-credentials',
-                               usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-                         sh "docker login --username $USERNAME --password $PASSWORD"
-                    }
-               }
-          }
+          // stage("Docker login") {
+          //      steps {
+          //           withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'docker-hub-credentials',
+          //                      usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+          //                sh "docker login --username $USERNAME --password $PASSWORD"
+          //           }
+          //      }
+          // }
 
-          stage("Docker push") {
-               steps {
-                    sh "docker push wbbdockerid/calculator:${BUILD_NUMBER}"
-               }
-          }
+          // stage("Docker push") {
+          //      steps {
+          //           sh "docker push wbbdockerid/calculator:${BUILD_NUMBER}"
+          //      }
+          // }
 
-          stage("Update version") {
-               steps {
-                    sh "sed  -i 's/{{VERSION}}/${BUILD_NUMBER}/g' calculator.yaml"
-               }
-          }
+          // stage("Update version") {
+          //      steps {
+          //           sh "sed  -i 's/{{VERSION}}/${BUILD_NUMBER}/g' calculator.yaml"
+          //      }
+          // }
           
-          stage("Deploy to staging") {
-               steps {
-                   withKubeConfig([credentialsId: 'kubernetes-token',
-                        serverUrl: 'https://712AB9B49CF089974C0EACC423442F4B.gr7.us-east-2.eks.amazonaws.com'
-                        ]) {
-                            sh "kubectl apply -f calculator.yaml"
-                    }
-               }
-          }
+          // stage("Deploy to staging") {
+          //      steps {
+          //          withKubeConfig([credentialsId: 'kubernetes-token',
+          //               serverUrl: 'https://712AB9B49CF089974C0EACC423442F4B.gr7.us-east-2.eks.amazonaws.com'
+          //               ]) {
+          //                   sh "kubectl apply -f calculator.yaml"
+          //           }
+          //      }
+          // }
 
 
-          stage("Acceptance test") {
-               steps {
-                    sleep 60
-                    sh "chmod +x acceptance-test.sh && ./acceptance-test.sh"
-               }
-          }
+          // stage("Acceptance test") {
+          //      steps {
+          //           sleep 60
+          //           sh "chmod +x acceptance-test.sh && ./acceptance-test.sh"
+          //      }
+          // }
 
 /*
           stage("Release") {
