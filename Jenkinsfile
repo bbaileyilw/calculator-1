@@ -6,22 +6,22 @@ pipeline {
      stages {
           stage("Compile") {
                steps {
-                    sh "./gradlew compileJava"
+                    sh "./gradlew --no-daemon compileJava"
                }
           }
           stage("Unit test") {
                steps {
-                    sh "./gradlew test"
+                    sh "./gradlew --no-daemon test"
                }
           }
           stage("Static code analysis") {
                steps {
-                    sh "./gradlew checkstyleMain"
+                    sh "./gradlew --no-daemon checkstyleMain"
                }
           }
           stage("Package") {
                steps {
-                    sh "./gradlew build"
+                    sh "./gradlew --no-daemon build"
                }
           }
 
