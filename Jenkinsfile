@@ -25,26 +25,26 @@ pipeline {
                }
           }
 
-          // stage("Docker build") {
-          //      steps {
-          //           sh "docker build -t wbbdockerid/calculator:${BUILD_NUMBER} ."
-          //      }
-          // }
+          stage("Docker build") {
+               steps {
+                    sh "docker build -t wbbdockerid/calculator:${BUILD_NUMBER} ."
+               }
+          }
 
-          // stage("Docker login") {
-          //      steps {
-          //           withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'docker-hub-credentials',
-          //                      usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-          //                sh "docker login --username $USERNAME --password $PASSWORD"
-          //           }
-          //      }
-          // }
+          stage("Docker login") {
+               steps {
+                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'docker-hub-credentials',
+                               usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+                         sh "docker login --username $USERNAME --password $PASSWORD"
+                    }
+               }
+          }
 
-          // stage("Docker push") {
-          //      steps {
-          //           sh "docker push wbbdockerid/calculator:${BUILD_NUMBER}"
-          //      }
-          // }
+          stage("Docker push") {
+               steps {
+                    sh "docker push wbbdockerid/calculator:${BUILD_NUMBER}"
+               }
+          }
 
           // stage("Update version") {
           //      steps {
