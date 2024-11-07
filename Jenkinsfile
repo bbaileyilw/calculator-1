@@ -33,6 +33,7 @@ pipeline {
 
           stage("Docker login") {
                steps {
+                    // Credentials need to be set in Jenkins -> Manage
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'docker-hub-credentials',
                                usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
                          sh "docker login --username $USERNAME --password $PASSWORD"
