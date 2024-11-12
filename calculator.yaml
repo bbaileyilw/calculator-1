@@ -5,7 +5,7 @@ metadata:
   labels:
     app: calculator
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: calculator
@@ -16,8 +16,7 @@ spec:
     spec:
       containers:
       - name: calculator
-        image: leszko/calculator:{{VERSION}}
-        imagePullPolicy: Always
+        image: wbbdocker1/calculator:2
         ports:
         - containerPort: 8080
 
@@ -28,7 +27,7 @@ kind: Service
 metadata:
   name: calculator-service
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: calculator
   ports:
