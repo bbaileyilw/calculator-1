@@ -27,7 +27,7 @@ pipeline {
 
           stage("Docker build") {
                steps {
-                    sh "docker build -t wbbdockerid/calculator:${BUILD_NUMBER} ."
+                    sh "docker build -t wbbdocker1/calculator:${BUILD_NUMBER} ."
                }
           }
 
@@ -43,7 +43,7 @@ pipeline {
 
           stage("Docker push") {
                steps {
-                    sh "docker push wbbdockerid/calculator:${BUILD_NUMBER}"
+                    sh "docker push wbbdocker1/calculator:${BUILD_NUMBER}"
                }
           }
 
