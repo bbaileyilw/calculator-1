@@ -4,46 +4,61 @@ pipeline {
           pollSCM('* * * * *')
      }
      stages {
-          stage("Compile") {
-               steps {
-                    sh "./gradlew --no-daemon compileJava"
-               }
-          }
-          stage("Unit test") {
-               steps {
-                    sh "./gradlew --no-daemon test"
-               }
-          }
-          stage("Static code analysis") {
-               steps {
-                    sh "./gradlew --no-daemon checkstyleMain"
-               }
-          }
-          stage("Package") {
-               steps {
-                    sh "./gradlew --no-daemon build"
-               }
-          }
+          // stage("Compile") {
+          //      steps {
+          //           sh "./gradlew --no-daemon compileJava"
+          //      }
+          // }
+          // stage("Unit test") {
+          //      steps {
+          //           sh "./gradlew --no-daemon test"
+          //      }
+          // }
+          // stage("Static code analysis") {
+          //      steps {
+          //           sh "./gradlew --no-daemon checkstyleMain"
+          //      }
+          // }
+          // stage("Package") {
+          //      steps {
+          //           sh "./gradlew --no-daemon build"
+          //      }
+          // }
 
-          stage("Docker build") {
-               steps {
-                    sh "docker build -t wbbdocker1/calculator:${BUILD_NUMBER} ."
-               }
-          }
+          // stage("Docker build") {
+          //      steps {
+          //           sh "docker build -t wbbdocker1/calculator:${BUILD_NUMBER} ."
+          //      }
+          // }
 
-          stage("Docker login") {
+          // stage("Docker login") {
+          //      steps {
+          //           // Credentials need to be set in Jenkins -> Manage
+          //           withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'docker-hub-credentials',
+          //                      usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+          //                sh "docker login --username $USERNAME --password $PASSWORD"
+          //           }
+          //      }
+          // }
+
+          // stage("Docker push") {
+          //      steps {
+          //           sh "docker push wbbdocker1/calculator:${BUILD_NUMBER}"
+          //      }
+          // }
+
+          stage("Update Infra repo") {
                steps {
                     // Credentials need to be set in Jenkins -> Manage
-                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'docker-hub-credentials',
+                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'github-credentials',
                                usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-                         sh "docker login --username $USERNAME --password $PASSWORD"
+                                             sh "git clone https://$USERNAME:$PASSWORD@github.com/bbaileyilw/wbinfra.git"
+                                             sh "cd wbinfra"
+                                             sh "echo wbbdocker1/calculator:3 > CALCULATOR_DOCKER_IMAGE"
+                                             sh "git add CALCULATOR_DOCKER_IMAGE"
+                                             sh "git commit -m 'Update calculator Docker Image"
+                                             sh "git push origin main" 
                     }
-               }
-          }
-
-          stage("Docker push") {
-               steps {
-                    sh "docker push wbbdocker1/calculator:${BUILD_NUMBER}"
                }
           }
 
