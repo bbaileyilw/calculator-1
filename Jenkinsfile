@@ -56,7 +56,7 @@ pipeline {
                                              sh "cd wbinfra"
                                              sh "echo wbbdocker1/calculator:3 > CALCULATOR_DOCKER_IMAGE"
                                              sh "git add CALCULATOR_DOCKER_IMAGE"
-                                             sh "git commit -m 'Update calculator Docker Image"
+                                             sh "git commit -m 'Update calculator Docker Image'"
                                              sh "git push origin main" 
                     }
                }
