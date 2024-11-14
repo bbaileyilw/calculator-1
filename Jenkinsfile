@@ -55,11 +55,12 @@ pipeline {
                                              sh "git config --global user.email 'wbinfra@wbinfra.com'"
                                              sh "git config --global user.name 'Jenkins Infra'"
                                              sh "git clone https://$USERNAME:$PASSWORD@github.com/bbaileyilw/wbinfra.git"
-                                             sh "cd wbinfra"
-                                             sh "echo wbbdocker1/calculator:3 > CALCULATOR_DOCKER_IMAGE"
-                                             sh "git add CALCULATOR_DOCKER_IMAGE"
-                                             sh "git commit -m 'Update calculator Docker Image'"
-                                             sh "git push origin main" 
+                                             dir('wbinfra') {
+                                                  sh "echo wbbdocker1/calculator:3 > CALCULATOR_DOCKER_IMAGE"
+                                                  sh "git add CALCULATOR_DOCKER_IMAGE"
+                                                  sh "git commit -m 'Update calculator Docker Image'"
+                                                  sh "git push origin main" 
+                                             }
                     }
                }
           }
