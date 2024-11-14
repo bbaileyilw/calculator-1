@@ -52,6 +52,8 @@ pipeline {
                     // Credentials need to be set in Jenkins -> Manage
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'github-credentials',
                                usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+                                             sh "git config --global user.email 'wbinfra@wbinfra.com'"
+                                             sh "git config --global user.name 'Jenkins Infra'"
                                              sh "git clone https://$USERNAME:$PASSWORD@github.com/bbaileyilw/wbinfra.git"
                                              sh "cd wbinfra"
                                              sh "echo wbbdocker1/calculator:3 > CALCULATOR_DOCKER_IMAGE"
